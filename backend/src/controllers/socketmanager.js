@@ -5,14 +5,23 @@ let messages = {}
 let timeOnline = {}
 
 export const connectToSocket = (server) => {
+    
+    // --- 🔴 THIS IS THE FIX 🔴 ---
+    // This list MUST be your VERCEL frontend URL
+    const allowedOrigins = [
+      "https://nex-call-afln.vercel.app",   // Without the slash
+      "https://nex-call-afln.vercel.app/",  // With the slash
+    ];
+    
     const io = new Server(server, {
         cors: {
-            origin: "https://nex-call-afln.vercel.app/",
+            origin: allowedOrigins, // Use the list here
             methods: ["GET", "POST"],
             allowedHeaders: ["*"],
             credentials: true
         }
     });
+    // --- END OF FIX ---
 
     io.on("connection", (socket) => {
         console.log("🟢 NEW CONNECTION:", socket.id);
@@ -34,12 +43,10 @@ export const connectToSocket = (server) => {
             console.log(`📋 Room "${path}" now has ${connections[path].length} user(s):`, connections[path]);
 
             // 1️⃣ Send the complete user list TO THE NEW USER ONLY
-            // The first param 'socket.id' tells the client "you are the new user"
             socket.emit("user-joined", socket.id, connections[path]);
             console.log(`   ✉️  Sent to ${socket.id}: user-joined with all users`);
 
             // 2️⃣ Notify all EXISTING users about the new user
-            // The first param 'socket.id' tells them "this is the person who joined"
             existingUsers.forEach((existingUserId) => {
                 io.to(existingUserId).emit("user-joined", socket.id, connections[path]);
                 console.log(`   ✉️  Notified ${existingUserId} about new user ${socket.id}`);
@@ -134,4 +141,3 @@ export const connectToSocket = (server) => {
 
     return io;
 }
-

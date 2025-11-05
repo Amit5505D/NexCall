@@ -6,7 +6,18 @@ import { connectToSocket } from "./controllers/socketmanager.js";
 import userRoutes from "./routes/users.routes.js";
 
 const app = express();
-app.use(cors({origin:"https://nexcall-04mk.onrender.com"}));
+
+// --- 🔴 THIS IS THE FIX 🔴 ---
+// This list MUST be your VERCEL frontend URL
+const allowedOrigins = [
+  "https://nex-call-afln.vercel.app",   // Without the slash
+  "https://nex-call-afln.vercel.app/",  // With the slash
+];
+
+// Use that list here
+app.use(cors({ origin: allowedOrigins }));
+// --- END OF FIX ---
+
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
@@ -35,3 +46,5 @@ const start = async () => {
 };
 
 start();
+
+
