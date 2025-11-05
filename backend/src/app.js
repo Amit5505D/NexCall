@@ -6,7 +6,7 @@ import { connectToSocket } from "./controllers/socketmanager.js";
 import userRoutes from "./routes/users.routes.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({origin:"https://nexcall-04mk.onrender.com"}));
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
 

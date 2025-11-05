@@ -7,7 +7,7 @@ let timeOnline = {}
 export const connectToSocket = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: "*",
+            origin: "https://nex-call-afln.vercel.app/",
             methods: ["GET", "POST"],
             allowedHeaders: ["*"],
             credentials: true

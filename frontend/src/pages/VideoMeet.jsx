@@ -18,7 +18,7 @@ import server from '../environment.js'; // Removed: Server URL is now defined be
 // Change "8000" to whatever port your server (socketmanager.js) is running on.
 // If your server is on port 3001, change this to "http://localhost:3001"
 //
-const server_url = "http://localhost:8000"; 
+const server_url = "https://nexcall-04mk.onrender.com"; 
 //
 // --- 🔴 END OF FIX 🔴 ---
 
